@@ -12,6 +12,7 @@ Zenitty is a full-stack, single-user to-do list web app with a soft mint-green a
 - **Database**: SQLite via Prisma (swappable to PostgreSQL)
 - **Validation**: Zod
 - **Linting**: ESLint + TypeScript strict mode
+- **Icons**: lucide-react (stroke 2)
 
 ## Folder Structure
 
@@ -23,7 +24,6 @@ zenitty/
 │   │   ├── components/     # React components
 │   │   ├── hooks/          # Custom React hooks
 │   │   ├── types/          # Shared TypeScript types
-│   │   ├── utils/          # Utility functions
 │   │   ├── App.tsx         # Root component
 │   │   ├── main.tsx        # Entry point
 │   │   └── index.css       # Tailwind + global styles
@@ -38,10 +38,12 @@ zenitty/
 │   ├── src/
 │   │   ├── routes/         # Express route handlers
 │   │   ├── middleware/     # Express middleware
+│   │   ├── validation/     # Zod schemas
 │   │   ├── types/          # Server types
 │   │   ├── app.ts          # Express app setup
 │   │   └── index.ts        # Server entry point
 │   └── package.json
+├── docs/design/             # Design mockups (source of truth)
 ├── package.json            # Root workspace config
 ├── AGENTS.md               # This file
 └── README.md
@@ -75,6 +77,7 @@ npm run db:seed            # Seed the database
 - **Tailwind only** — no inline styles, no CSS modules
 - **Theme tokens only** — never hardcode colors; use Tailwind theme tokens
 - **Conventional Commits** — `feat:`, `fix:`, `chore:`, `docs:`, `style:`, `refactor:`
+- **Always compare UI against /docs/design/*.png**
 
 ## API Contract
 
@@ -131,31 +134,76 @@ npm run db:seed            # Seed the database
 
 | Token | Light | Dark |
 |-------|-------|------|
-| Background | `#E3F1EA` (mint-100) | `#121B17` (charcoal-900) |
-| Card | `#FFFFFF` | `#1E2B25` (charcoal-800) |
-| Primary | `#2F6B4F` (forest-600) | `#7FC4A3` (mint-500) |
-| Today | `#BFE3CF` (mint-300) | `#2F6B4F` (forest-600) |
-| Overdue | `#F8D9D0` (peach-100) | `#F0A896` (peach-300) |
-| All | `#D7ECD9` (sage-100) | `#3D8B6A` (forest-500) |
-| Completed | `#D9D2F0` (lavender-100) | `#A89BE0` (lavender-300) |
+| Background | `#E3F1EA` | `#0F1A16` |
+| Surface | `#FFFFFF` | `#172520` |
+| Subtle surface | `#F4FAF7` | `#1E2E28` |
+| List rows | `#F6FBF8` | `#1E2E28` |
+| Border | `#D3E6DC` | `#2A3D35` |
+| Input border | `#C5DDD0` | `#2A3D35` |
+| Primary | `#2F6B4F` | `#8FD1B0` |
+| Primary text | `#1E4D38` | `#8FD1B0` |
+| Text | `#17332A` | `#E6F2EC` |
+| Secondary text | `#34503F` | `#B8CFC4` |
+| Muted text | `#4F6B60` | `#9DB5AB` |
+| Danger | `#B23A22` | `#E07B6A` |
+
+### Stat Cards
+
+| Card | Background | Label |
+|------|-----------|-------|
+| Due today | `#BFE3CF` | `#1E4D38` |
+| Overdue | `#F8D9D0` | `#7A2E1D` |
+| All tasks | `#D7ECD9` | `#1E4D38` |
+| Completed this week | `#D9D2F0` | `#43357A` |
+
+Dark: `#24473A`, `#4A2E2A`, `#22392E`, `#332D4A` with pastel labels.
+
+### Priority Badges
+
+| Priority | Background | Text |
+|----------|-----------|------|
+| High | `#F8D9D0` | `#7A2E1D` |
+| Medium | `#FBE9C4` | `#6E4A0B` |
+| Low | `#D7ECD9` | `#1E4D38` |
+
+### Category Dots
+
+| Category | Color |
+|----------|-------|
+| Work | `#2F6B4F` |
+| Personal | `#7B6BC0` |
+| Health | `#D0664E` |
+| Shopping | `#C9962B` |
+| Other | `#6F8A7E` |
 
 ### Typography
 
-- Font: **Nunito** (Google Fonts)
-- Stat numbers: very large, bold (text-5xl font-extrabold)
+- Font: **Nunito** (Google Fonts), weights 400–900
+- Greeting: 26px/800 laptop, 20px/800 mobile
+- Stat numbers: 68px/900 laptop, 52px/900 mobile
+- Task titles: 15px/800
+- Meta text: 12–13px/700 muted
+- Section labels: uppercase, 12px/800, letter-spacing 1px
 
-### Radius & Shadows
+### Shapes
 
-- Cards: 18px radius, soft shadow
-- Sheets/modals: 20px radius
+- Radius: stat cards 20px, rows 14–16px, inputs/buttons 12–14px, floating "+" 20px, chips/badges fully rounded
+- Everything flat. Only shadow is soft green on floating "+" button.
+
+### Icons
+
+- lucide-react (stroke 2)
+- Task checkbox: 22px circle with 2px primary border inside 44×44 button
+- Done: filled primary circle with white check, title struck through in muted
+- Overdue meta line in danger red
 
 ### Breakpoints
 
 | Width | Layout |
 |-------|--------|
-| >=1024px | Left sidebar + main + right detail panel |
-| 768-1023px | Collapsible sidebar, detail as modal |
-| <768px | Single column, 2x2 stats, floating + button, full-screen sheets |
+| >=1024px | Left sidebar (248px) + main + right detail panel (360px) |
+| 768-1023px | Collapsible sidebar (icons only), detail as modal |
+| <768px | Single column, 2x2 stats (118px), floating + (60px), full-screen sheets |
 
 ## Definition of Done
 
@@ -163,6 +211,7 @@ npm run db:seed            # Seed the database
 - [ ] Works in light and dark mode
 - [ ] No console errors
 - [ ] Lint passes
+- [ ] Matches mockup (/docs/design/*.png)
 - [ ] README/AGENTS.md updated if needed
 
 ## Roadmap / Not in v1
