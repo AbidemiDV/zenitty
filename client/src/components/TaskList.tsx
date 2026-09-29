@@ -8,13 +8,35 @@ import type { Task } from '../types';
 
 interface TaskListProps {
   params?: TaskQueryParams;
+  dateFilter?: { dueToday?: boolean; overdue?: boolean };
 }
 
-export default function TaskList({ params }: TaskListProps) {
+export default function TaskList({ params, dateFilter }: TaskListProps) {
   const { data: tasks, isLoading, error } = useTasks(params);
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [deletingTask, setDeletingTask] = useState<Task | null>(null);
+
+  const filteredTasks = tasks?.filter((task) => {
+    if (!dateFilter) return true;
+    if (dateFilter.dueToday) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      if (!task.dueDate) return false;
+      const due = new Date(task.dueDate);
+      return due >= today && due < tomorrow && task.status !== 'COMPLETED';
+    }
+    if (dateFilter.overdue) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (!task.dueDate) return false;
+      const due = new Date(task.dueDate);
+      return due < today && task.status !== 'COMPLETED';
+    }
+    return true;
+  });
 
   if (isLoading) {
     return (
@@ -32,10 +54,10 @@ export default function TaskList({ params }: TaskListProps) {
     );
   }
 
-  if (!tasks || tasks.length === 0) {
+  if (!filteredTasks || filteredTasks.length === 0) {
     return (
       <div className="text-center py-20">
-        <p className="text-forest-500 dark:text-mint-500">No tasks yet</p>
+        <p className="text-forest-500 dark:text-mint-500">No tasks found</p>
       </div>
     );
   }
@@ -43,7 +65,7 @@ export default function TaskList({ params }: TaskListProps) {
   return (
     <>
       <div className="space-y-3">
-        {tasks.map((task) => (
+        {filteredTasks.map((task) => (
           <TaskItem
             key={task.id}
             task={task}
