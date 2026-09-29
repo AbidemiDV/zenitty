@@ -1,5 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import tasksRouter from './routes/tasks';
+import statsRouter from './routes/stats';
+import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 
@@ -12,5 +15,10 @@ app.use(express.json());
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
+
+app.use('/api/tasks', tasksRouter);
+app.use('/api/stats', statsRouter);
+
+app.use(errorHandler);
 
 export default app;
