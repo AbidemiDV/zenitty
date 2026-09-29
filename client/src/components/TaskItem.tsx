@@ -1,17 +1,12 @@
 import type { Task } from '../types';
 import { useUpdateTask } from '../hooks/useTasks';
+import Badge from './Badge';
 
 interface TaskItemProps {
   task: Task;
   onEdit: () => void;
   onDelete: () => void;
 }
-
-const priorityColors: Record<string, string> = {
-  HIGH: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
-  MEDIUM: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
-  LOW: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-};
 
 export default function TaskItem({ task, onEdit, onDelete }: TaskItemProps) {
   const updateTask = useUpdateTask();
@@ -55,13 +50,9 @@ export default function TaskItem({ task, onEdit, onDelete }: TaskItemProps) {
               {task.description}
             </p>
           )}
-          <div className="flex items-center gap-2 mt-2">
-            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${priorityColors[task.priority]}`}>
-              {task.priority}
-            </span>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-mint-100 text-forest-600 dark:bg-charcoal-700 dark:text-mint-400">
-              {task.category}
-            </span>
+          <div className="flex flex-wrap items-center gap-2 mt-2">
+            <Badge label={task.priority} variant="priority" value={task.priority} />
+            <Badge label={task.category} variant="category" value={task.category} />
             {task.dueDate && (
               <span className="text-xs text-forest-400 dark:text-mint-600">
                 Due {new Date(task.dueDate).toLocaleDateString()}
