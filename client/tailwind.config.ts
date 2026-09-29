@@ -8,7 +8,7 @@ export default {
       colors: {
         // Light theme
         mint: {
-          50: '#F0F9F4',
+          50: '#F4FAF7',
           100: '#E3F1EA',
           200: '#C8E4D6',
           300: '#BFE3CF',
@@ -39,23 +39,40 @@ export default {
         },
         // Dark theme
         charcoal: {
-          800: '#1E2B25',
-          850: '#182420',
-          900: '#121B17',
-          950: '#0D1512',
+          700: '#2A3D35',
+          800: '#172520',
+          850: '#142019',
+          900: '#0F1A16',
+          950: '#0A120E',
         },
+        // Semantic
+        danger: '#B23A22',
+        'danger-light': '#F8D9D0',
+        'danger-dark': '#7A2E1D',
       },
       fontFamily: {
         sans: ['Nunito', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
-        'card': '18px',
-        'sheet': '20px',
+        'card': '20px',
+        'row': '16px',
+        'input': '14px',
+        'button': '14px',
+        'fab': '20px',
+        'sheet': '24px',
       },
       boxShadow: {
-        'card': '0 2px 12px rgba(0, 0, 0, 0.06)',
-        'card-hover': '0 4px 20px rgba(0, 0, 0, 0.1)',
-        'sheet': '0 -4px 30px rgba(0, 0, 0, 0.15)',
+        'card': '0 1px 3px rgba(0, 0, 0, 0.04)',
+        'fab': '0 4px 16px rgba(47, 107, 79, 0.25)',
+      },
+      fontSize: {
+        'greeting': ['26px', { lineHeight: '1.2', fontWeight: '800' }],
+        'greeting-mobile': ['20px', { lineHeight: '1.2', fontWeight: '800' }],
+        'stat': ['68px', { lineHeight: '1', fontWeight: '900' }],
+        'stat-mobile': ['52px', { lineHeight: '1', fontWeight: '900' }],
+        'task-title': ['15px', { lineHeight: '1.4', fontWeight: '800' }],
+        'meta': ['12px', { lineHeight: '1.4', fontWeight: '700' }],
+        'section': ['12px', { lineHeight: '1.2', fontWeight: '800', letterSpacing: '1px' }],
       },
     },
   },

@@ -3,7 +3,89 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-bg: #E3F1EA;
+    --color-surface: #FFFFFF;
+    --color-subtle: #F4FAF7;
+    --color-row: #F6FBF8;
+    --color-border: #D3E6DC;
+    --color-input-border: #C5DDD0;
+    --color-primary: #2F6B4F;
+    --color-primary-text: #1E4D38;
+    --color-text: #17332A;
+    --color-text-secondary: #34503F;
+    --color-text-muted: #4F6B60;
+    --color-danger: #B23A22;
+
+    --color-stat-today: #BFE3CF;
+    --color-stat-today-label: #1E4D38;
+    --color-stat-overdue: #F8D9D0;
+    --color-stat-overdue-label: #7A2E1D;
+    --color-stat-all: #D7ECD9;
+    --color-stat-all-label: #1E4D38;
+    --color-stat-completed: #D9D2F0;
+    --color-stat-completed-label: #43357A;
+
+    --color-priority-high: #F8D9D0;
+    --color-priority-high-text: #7A2E1D;
+    --color-priority-medium: #FBE9C4;
+    --color-priority-medium-text: #6E4A0B;
+    --color-priority-low: #D7ECD9;
+    --color-priority-low-text: #1E4D38;
+
+    --color-category-work: #2F6B4F;
+    --color-category-personal: #7B6BC0;
+    --color-category-health: #D0664E;
+    --color-category-shopping: #C9962B;
+    --color-category-other: #6F8A7E;
+  }
+
+  .dark {
+    --color-bg: #0F1A16;
+    --color-surface: #172520;
+    --color-subtle: #1E2E28;
+    --color-row: #1E2E28;
+    --color-border: #2A3D35;
+    --color-input-border: #2A3D35;
+    --color-primary: #8FD1B0;
+    --color-primary-text: #8FD1B0;
+    --color-text: #E6F2EC;
+    --color-text-secondary: #B8CFC4;
+    --color-text-muted: #9DB5AB;
+    --color-danger: #E07B6A;
+
+    --color-stat-today: #24473A;
+    --color-stat-today-label: #8FD1B0;
+    --color-stat-overdue: #4A2E2A;
+    --color-stat-overdue-label: #F0A896;
+    --color-stat-all: #22392E;
+    --color-stat-all-label: #8FD1B0;
+    --color-stat-completed: #332D4A;
+    --color-stat-completed-label: #C4BCE8;
+
+    --color-priority-high: #4A2E2A;
+    --color-priority-high-text: #F0A896;
+    --color-priority-medium: #3D3018;
+    --color-priority-medium-text: #FBE9C4;
+    --color-priority-low: #22392E;
+    --color-priority-low-text: #8FD1B0;
+
+    --color-category-work: #8FD1B0;
+    --color-category-personal: #A89BE0;
+    --color-category-health: #F0A896;
+    --color-category-shopping: #E8C96A;
+    --color-category-other: #9DB5AB;
+  }
+
   body {
     @apply font-sans antialiased;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+}
+
+@layer components {
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-offset-2;
   }
 }

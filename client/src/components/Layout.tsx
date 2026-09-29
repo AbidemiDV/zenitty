@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import Header from './Header';
 import { useDarkMode } from '../hooks/useDarkMode';
 
 export default function Layout() {
@@ -11,15 +10,8 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-mint-100 dark:bg-charcoal-900">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="lg:pl-64">
-        <Header
-          onMenuClick={() => setSidebarOpen(true)}
-          theme={theme}
-          onThemeToggle={toggle}
-        />
-        <main className="p-4 md:p-6 lg:p-8">
-          <Outlet />
-        </main>
+      <div className="lg:pl-[248px]">
+        <Outlet context={{ theme, onThemeToggle: toggle, onMenuClick: () => setSidebarOpen(true) }} />
       </div>
     </div>
   );
